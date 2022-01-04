@@ -3,6 +3,7 @@ package com.example.admin_study.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString(exclude = {"orderDetailList", "partner"})
 public class Item {
 
     @Id
@@ -31,6 +33,12 @@ public class Item {
     private LocalDateTime updatedAt;
     private String updatedBy;
 
-    private Long partnerId;
+    // item 1 : N orderDetail
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    private List<OrderDetail> orderDetailList;
+
+    // item N : 1 partner
+    @ManyToOne
+    private Partner partner;
 
 }
