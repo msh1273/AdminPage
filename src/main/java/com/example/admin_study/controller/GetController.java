@@ -1,6 +1,7 @@
 package com.example.admin_study.controller;
 
 import com.example.admin_study.model.SearchParam;
+import com.example.admin_study.model.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,5 +31,10 @@ public class GetController {
 
         //{"account" : "", "email" : "", "page" : 0}
         return searchParam;
+    }
+
+    @GetMapping("/header")
+    public Header getHeader(){
+        return Header.builder().resultCode("OK").description("OK").build();
     }
 }
