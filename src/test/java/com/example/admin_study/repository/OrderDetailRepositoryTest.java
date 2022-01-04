@@ -2,10 +2,12 @@ package com.example.admin_study.repository;
 
 import com.example.admin_study.AdminStudyApplicationTests;
 import com.example.admin_study.model.entity.OrderDetail;
+import org.aspectj.weaver.ast.Or;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OrderDetailRepositoryTest extends AdminStudyApplicationTests {
@@ -17,13 +19,15 @@ public class OrderDetailRepositoryTest extends AdminStudyApplicationTests {
     public void create(){
         OrderDetail orderDetail = new OrderDetail();
 
-        orderDetail.setOrderAt(LocalDateTime.now());
+        orderDetail.setStatus("WAITING");
+        orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
+        orderDetail.setQuantity(1);
+        orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
+        orderDetail.setCreatedAt(LocalDateTime.now());
+        orderDetail.setCreatedBy("AdminServer");
 
-        //어떤 사람이 주문했나?
-        //orderDetail.setUserId(7L);
-
-        //어떤 상품을 주문했나?
-        //orderDetail.setItemId(1L);
+        orderDetail.setOrderGroupId(1L);    // 어떤 장바구니?
+        orderDetail.setItemId(1L);          // 어떤 상품?
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
         Assert.assertNotNull(newOrderDetail);
